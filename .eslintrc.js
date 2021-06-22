@@ -13,20 +13,19 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks', 'jest', 'prettier'],
+  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     //'airbnb-typescript',
     'react-app',
-    //'react-app/jest',
-    'plugin:jest/recommended',
     'prettier',
     'plugin:prettier/recommended',
   ],
   rules: {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/ban-types': [
       'error',
@@ -34,6 +33,7 @@ module.exports = {
         extendDefaults: true,
         types: {
           '{}': false,
+          Function: false,
         },
       },
     ],
@@ -41,13 +41,6 @@ module.exports = {
     'react/prop-types': 'off',
     'import/no-anonymous-default-export': 'off',
     'import/prefer-default-export': 'off',
-    'import/no-extraneous-dependencies': [
-      'off',
-      //'error',
-      //{
-      //  devDependencies: ['stories/**/*', 'test/**/*'],
-      //},
-    ],
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -61,13 +54,6 @@ module.exports = {
       files: ['**/*.stories.*'],
       rules: {
         'import/no-anonymous-default-export': 'off',
-      },
-    },
-    {
-      files: ['*.spec.*'],
-      rules: {
-        'jest/valid-expect': 0,
-        'jest/valid-expect-in-promise': 0,
       },
     },
   ],
