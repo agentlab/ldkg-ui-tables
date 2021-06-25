@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Storybook1 in Chrome",
-            "url": "http://localhost:6006",
+            "url": "http://localhost:6006/?path=/story/remoteartifacts--remote-data",
             "webRoot": "${workspaceFolder}",
         },
     ]

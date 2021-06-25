@@ -70,8 +70,6 @@ const renderTester = (prevProps: any, nextProps: any) => {
     isEqual(prevProps.column, nextProps.column) &&
     isEqual(prevProps.cellData, nextProps.cellData) &&
     isEqual(prevProps.enabled, nextProps.enabled) &&
-    isEqual(prevProps.renderers, nextProps.renderers) &&
-    isEqual(prevProps.cells, nextProps.cells) &&
     isEqual(prevProps.viewElement, nextProps.viewElement) &&
     isEqual(prevProps.rowData, nextProps.rowData) &&
     isEqual(prevProps.uri, nextProps.uri) &&
@@ -85,8 +83,6 @@ export const EditableCell: React.FC<any> = React.memo(
     cellData,
     schema,
     enabled,
-    renderers,
-    cells,
     viewElement,
     rowData,
     column,
@@ -115,8 +111,6 @@ export const EditableCell: React.FC<any> = React.memo(
         viewElement={viewElement}
         view={{ '@id': 'test', '@type': 'test', type: 'test' }}
         enabled={enabled}
-        renderers={renderers}
-        cells={cells}
       />
     ) : null;
   },

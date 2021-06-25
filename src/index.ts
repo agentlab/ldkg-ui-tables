@@ -7,6 +7,9 @@
  *
  * SPDX-License-Identifier: GPL-3.0-only
  ********************************************************************************/
+import { RendererRegistryEntry } from '@agentlab/ldkg-ui-react';
+import { BaseTableArrayControlWithStore, tableArrayControlTester } from './BaseTableArrayControlRenderer';
+
 export * from './basetable/BaseTableMenu';
 export * from './basetable/ReactBaseTable';
 //export * from './ForDelete';
@@ -14,5 +17,12 @@ export * from './basetable/TableCellsAndRows';
 export * from './basetable/TableHeader';
 export * from './basetable/TableSettingMenu';
 
-export * from './table/AntdTableControl';
+export * from './table/BaseTableControl';
 export * from './table/TableCell';
+
+export const tableRenderers: RendererRegistryEntry[] = [
+  {
+    tester: tableArrayControlTester,
+    renderer: BaseTableArrayControlWithStore,
+  },
+];

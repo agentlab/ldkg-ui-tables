@@ -7,8 +7,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-only
  ********************************************************************************/
-import isEqual from 'lodash-es/isEqual';
-import forOwn from 'lodash-es/forOwn';
+import { has, isEqual, forOwn } from 'lodash-es';
 import React, { useState, useEffect } from 'react';
 import { Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
@@ -53,14 +52,11 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
     onSelect,
     onSort,
     loadExpandedData,
-    renderers,
-    cells,
     sortDir,
   }) => {
     const [parsedSchema, setParsedSchema] = useState<JsObject>({});
     const [columns, setColumns] = useState<JsObject[]>([]);
     const [tableMenu] = useState<any>();
-    const [width] = useState(1000);
     const uiSchemaOptions = options;
     const heightCache = {};
 
@@ -83,7 +79,6 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
     const JsonSchemaT = (
       <EditableTable
         options={options}
-        width={width}
         sortDir={sortDir}
         limit={limit}
         loadMoreData={loadMoreData}
@@ -100,9 +95,7 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
         onChangeMenu={setColumns}
         handleResize={handleResize}
         resizeableHeader={uiSchemaOptions['resizeableHeader']}
-        pagination={uiSchemaOptions.hasOwnProperty('pagination') ? uiSchemaOptions['pagination'] : false}
-        renderers={renderers}
-        cells={cells}
+        pagination={has(uiSchemaOptions, 'pagination') ? uiSchemaOptions['pagination'] : false}
       />
     );
 
@@ -116,7 +109,7 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
       };
 
       const setProperty = (schema: JsObject, obj: JsObject, key: string) => {
-        schema.hasOwnProperty(key) &&
+        has(schema, key) &&
           Object.defineProperty(obj, key, {
             value: schema[key],
             enumerable: true,
@@ -179,8 +172,6 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
               uri={uri}
               title={schema.properties[key]?.title || key}
               enabled={true}
-              renderers={renderers}
-              cells={cells}
               viewElement={createViewClass(key)}
               schema={schema.properties[key]}
               cellData={cellData}
@@ -190,10 +181,10 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
           disabledInColumnMenu: false,
           headerRenderer: (props: any) => <HeaderCell {...props} onSort={onSort} />,
         };
-        if (schema.properties[key]?.hasOwnProperty('formatters')) {
+        if (has(schema.properties[key], 'formatters')) {
           newColumn.render = schema.properties[key].formatters.default;
         }
-        if (uiSchemaOptions.hasOwnProperty(key)) {
+        if (has(uiSchemaOptions, key)) {
           setProperty(uiSchemaOptions[key], newColumn, 'width');
           setProperty(uiSchemaOptions[key], newColumn, 'editable');
           setProperty(uiSchemaOptions[key], newColumn, 'sorter');
@@ -237,7 +228,7 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
         setColumns(visibleColumns);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cells, options, renderers, schema, uiSchemaOptions]);
+    }, [options, schema, uiSchemaOptions]);
 
     useEffect(
       () =>

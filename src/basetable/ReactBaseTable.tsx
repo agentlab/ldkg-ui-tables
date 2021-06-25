@@ -96,7 +96,6 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
     dataSource,
     limit,
     loadMoreData,
-    width,
     setColumnVisible,
     loadExpandedData,
     isMenu,
@@ -105,8 +104,6 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
     filteredValue,
     handleResize = () => {},
     resizeableHeader = false,
-    renderers,
-    cells,
     rowKey = '@id',
     options = {},
     onSelect,
@@ -135,7 +132,7 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
       headerRenderer: ({ columns, column, columnIndex, headerIndex, container }: any) => <Test />,
     };
 
-    const _handleSelectChange = ({ selected, rowData, rowIndex }: any) => {
+    const handleSelectChange = ({ selected, rowData, rowIndex }: any) => {
       const newSelectedRowKeys = [...selectedRowKeys];
       const key = rowData[rowKey];
 
@@ -150,7 +147,7 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
       setSelectedRowKeys(newSelectedRowKeys);
     };
 
-    const _handleSelectHeaderChange = ({ selected }: any) => {
+    const handleSelectHeaderChange = ({ selected }: any) => {
       let newSelectedRowKeys;
       if (selected) {
         newSelectedRowKeys = dataSource.map((e: any) => e[rowKey]);
@@ -171,8 +168,8 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
       headerRenderer: SelectionHeaderCell,
       dataSize: dataSource.length,
       selectedRowKeys: selectedRowKeys,
-      onChange: _handleSelectChange,
-      onHeaderChange: _handleSelectHeaderChange,
+      onChange: handleSelectChange,
+      onHeaderChange: handleSelectHeaderChange,
     };
 
     const initTinyMCE = (
