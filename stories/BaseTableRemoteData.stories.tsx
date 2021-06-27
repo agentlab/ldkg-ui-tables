@@ -14,13 +14,7 @@ import { Meta, Story } from '@storybook/react';
 
 import { Provider } from 'react-redux';
 import { asReduxStore, connectReduxDevtools } from 'mst-middlewares';
-import {
-  createModelFromState,
-  rootModelInitialState,
-  CollState,
-  JSONSchema6forRdf,
-  SparqlClientImpl,
-} from '@agentlab/sparql-jsld-client';
+import { createModelFromState, rootModelInitialState, CollState, SparqlClientImpl } from '@agentlab/sparql-jsld-client';
 import {
   antdCells,
   antdControlRenderers,
@@ -190,38 +184,12 @@ const viewDescrs = [
   },
 ];
 
-const ViewShapeSchema: JSONSchema6forRdf = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
-  '@id': 'rm:ViewShape',
-  '@type': 'sh:NodeShape',
-  title: 'View Shape',
-  description: 'Artifact Shape',
-  targetClass: 'rm:View',
-  type: 'object',
-  '@context': {
-    '@type': 'rdf:type',
-  },
-  properties: {
-    '@id': {
-      title: 'URI',
-      type: 'string',
-      format: 'iri',
-    },
-    '@type': {
-      title: 'Тип',
-      type: 'string',
-      format: 'iri',
-    },
-  },
-  required: ['@id', '@type'],
-};
-
 const viewDescrCollConstr = {
   '@id': 'rm:Views_Coll',
   entConstrs: [
     {
       '@id': 'rm:Views_EntConstr0',
-      schema: ViewShapeSchema['@id'],
+      schema: 'rm:ViewShape',
     },
   ],
 };
@@ -257,7 +225,7 @@ const store: any = asReduxStore(rootStore);
 connectReduxDevtools(require('remotedev'), rootStore);
 
 export default {
-  title: 'RemoteArtifacts',
+  title: 'Remote/Artifacts',
   component: Form,
 } as Meta;
 

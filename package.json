@@ -34,7 +34,7 @@
     "lint-staged": "lint-staged"
   },
   "peerDependencies": {
-    "@agentlab/ldkg-ui-react": ">=0.1.9",
+    "@agentlab/ldkg-ui-react": ">=0.1.10",
     "@agentlab/sparql-jsld-client": ">=5.0.0-rc.8",
     "@ant-design/icons": ">=4.6.2",
     "@rdfjs/data-model": ">=1.2.0",
@@ -53,7 +53,7 @@
     "styled-components": ">=5.3.0"
   },
   "dependencies": {
-    "@agentlab/ldkg-ui-react": "^0.1.9",
+    "@agentlab/ldkg-ui-react": "^0.1.10",
     "@agentlab/sparql-jsld-client": "^5.0.0-rc.8",
     "@types/react-virtualized": "^9.21.11",
     "@types/styled-components": "^5.1.10",
