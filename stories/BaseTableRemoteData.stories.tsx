@@ -14,25 +14,27 @@ import { Meta, Story } from '@storybook/react';
 
 import { Provider } from 'react-redux';
 import { asReduxStore, connectReduxDevtools } from 'mst-middlewares';
-import { createModelFromState, rootModelInitialState, CollState, SparqlClientImpl } from '@agentlab/sparql-jsld-client';
+import { rootModelInitialState, CollState, SparqlClientImpl } from '@agentlab/sparql-jsld-client';
 import {
   antdCells,
   antdControlRenderers,
   antdLayoutRenderers,
+  createUiModelFromState,
   Form,
   MstContextProvider,
   RendererRegistryEntry,
+  viewKindCollConstr,
+  viewDescrCollConstr,
 } from '@agentlab/ldkg-ui-react';
 
 import { tableRenderers } from '../src';
 
 const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
 
-const viewDescrs = [
+const viewKinds = [
   {
-    '@id': 'rm:collectionView',
-    '@type': 'rm:View',
-    //'viewKind': 'rm:CollectionViewClass',
+    '@id': 'rm:CollectionViewKind',
+    '@type': 'aldkg:ViewKind',
     title: 'Набор',
     description: 'Big table View with form',
     collsConstrs: [
@@ -99,112 +101,120 @@ const viewDescrs = [
         limit: 50,
       },
     ],
-    type: 'VerticalLayout',
-    options: {
-      height: 'all-empty-space',
-    },
     elements: [
       {
-        '@id': 'ArtifactTable',
-        type: 'Array',
-        resultsScope: 'rm:CollectionView_Artifacts_Coll',
+        '@id': 'rm:_124jHd67',
+        '@type': 'aldkg:VerticalLayout',
         options: {
-          draggable: true,
-          resizeableHeader: true,
           height: 'all-empty-space',
-          style: { height: '100%' },
-          order: [
-            'identifier',
-            'title',
-            '@type',
-            'artifactFormat',
-            'description',
-            'xhtmlText',
-            'modified',
-            'modifiedBy',
-            '@id',
-            'assetFolder',
-          ],
-          identifier: {
-            width: 140,
-            sortable: true,
-            formater: 'link',
-            editable: false,
-            dataToFormater: { link: '@id' },
-          },
-          title: {
-            formater: 'artifactTitle',
-            dataToFormater: { type: 'artifactFormat' },
-          },
-          '@type': {
-            width: 140,
-            formater: 'dataFormater',
-            query: 'rm:ArtifactClasses_Coll',
-          },
-          artifactFormat: {
-            formater: 'dataFormater',
-            query: 'rm:ArtifactFormats_Coll',
-          },
-          description: {
-            //formater: 'tinyMCE',
-            sortable: true,
-          },
-          xhtmlText: {
-            formater: 'tinyMCE',
-            tinyWidth: 'emptySpace' /** emptySpace, content*/,
-            width: 300,
-          },
-          modified: {
-            width: 140,
-            formater: 'dateTime',
-            sortable: true,
-          },
-          modifiedBy: {
-            formater: 'dataFormater',
-            query: 'rm:Users_Coll',
-            key: 'name',
-          },
-          '@id': {
-            width: 220,
-          },
-          assetFolder: {
-            formater: 'dataFormater',
-            query: 'rm:Folders_Coll',
-          },
-          //creator: {
-          //  formater: 'userName',
-          //},
-          //created: {
-          //  width: 140,
-          //  formater: 'dateTime',
-          //},
         },
+        elements: [
+          {
+            '@id': 'ArtifactTable',
+            '@type': 'aldkg:Array',
+            resultsScope: 'rm:CollectionView_Artifacts_Coll',
+            options: {
+              draggable: true,
+              resizeableHeader: true,
+              height: 'all-empty-space',
+              style: { height: '100%' },
+              order: [
+                'identifier',
+                'title',
+                '@type',
+                'artifactFormat',
+                'description',
+                'xhtmlText',
+                'modified',
+                'modifiedBy',
+                '@id',
+                'assetFolder',
+              ],
+              identifier: {
+                width: 140,
+                sortable: true,
+                formatter: 'link',
+                editable: false,
+                dataToFormatter: { link: '@id' },
+              },
+              title: {
+                formatter: 'artifactTitle',
+                dataToFormatter: { type: 'artifactFormat' },
+              },
+              '@type': {
+                width: 140,
+                formatter: 'dataFormatter',
+                query: 'rm:ArtifactClasses_Coll',
+              },
+              artifactFormat: {
+                formatter: 'dataFormatter',
+                query: 'rm:ArtifactFormats_Coll',
+              },
+              description: {
+                //formatter: 'tinyMCE',
+                sortable: true,
+              },
+              xhtmlText: {
+                formatter: 'tinyMCE',
+                tinyWidth: 'emptySpace' /** emptySpace, content*/,
+                width: 300,
+              },
+              modified: {
+                width: 140,
+                formatter: 'dateTime',
+                sortable: true,
+              },
+              modifiedBy: {
+                formatter: 'dataFormatter',
+                query: 'rm:Users_Coll',
+                key: 'name',
+              },
+              '@id': {
+                width: 220,
+              },
+              assetFolder: {
+                formatter: 'dataFormatter',
+                query: 'rm:Folders_Coll',
+              },
+              //creator: {
+              //  formatter: 'userName',
+              //},
+              //created: {
+              //  width: 140,
+              //  formatter: 'dateTime',
+              //},
+            },
+          },
+        ],
       },
     ],
   },
 ];
 
-const viewDescrCollConstr = {
-  '@id': 'rm:Views_Coll',
-  entConstrs: [
-    {
-      '@id': 'rm:Views_EntConstr0',
-      schema: 'rm:ViewShape',
-    },
-  ],
-};
+const viewDescrs = [
+  {
+    '@id': 'rm:CollectionViewDescr',
+    '@type': 'aldkg:ViewDescr',
+    viewKind: 'rm:CollectionViewKind',
+    title: 'CardCellGrid',
+    description: 'CardCellGrid',
+    collsConstrs: [],
+    // child ui elements configs
+    elements: [],
+  },
+];
 
 const additionalColls: CollState[] = [
   // ViewKinds Collection
-  /*{
+  {
     constr: viewKindCollConstr,
     data: viewKinds,
     opt: {
       updPeriod: undefined,
       lastSynced: moment.now(),
-      resolveCollConstrs: false, // disable data loading from the server for viewKinds.collConstrs
+      //resolveCollConstrs: false, // disable data loading from the server for viewKinds.collConstrs
     },
-  },*/
+  },
   // ViewDescrs Collection
   {
     constr: viewDescrCollConstr,
@@ -219,7 +229,7 @@ const additionalColls: CollState[] = [
 ];
 
 const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
-const rootStore = createModelFromState('reqs2', client, rootModelInitialState, additionalColls);
+const rootStore = createUiModelFromState('reqs2', client, rootModelInitialState, additionalColls);
 const store: any = asReduxStore(rootStore);
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 connectReduxDevtools(require('remotedev'), rootStore);
@@ -233,7 +243,7 @@ const Template: Story = (args: any) => (
   <Provider store={store}>
     <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
       <div style={{ height: '1000px' }}>
-        <Form viewIri={viewDescrs[0]['@id']} viewsResultsScope={viewDescrCollConstr['@id']} />
+        <Form viewDescrId={viewDescrs[0]['@id']} viewDescrCollId={viewDescrCollConstr['@id']} />
       </div>
     </MstContextProvider>
   </Provider>

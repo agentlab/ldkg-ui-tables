@@ -298,52 +298,52 @@ const Template: Story = (args: any) => (
             identifier: {
               width: 140,
               sortable: true,
-              formater: 'link',
+              formatter: 'link',
               editable: false,
-              dataToFormater: { link: '@id' },
+              dataToFormatter: { link: '@id' },
             },
             title: {
-              formater: 'artifactTitle',
-              dataToFormater: { type: 'artifactFormat' },
+              formatter: 'artifactTitle',
+              dataToFormatter: { type: 'artifactFormat' },
             },
             '@type': {
               width: 140,
-              //formater: 'dataFormater',
+              //formatter: 'dataFormatter',
               //query: 'rm:ProjectViewClass_ArtifactClasses_Query',
-              formater: 'link',
+              formatter: 'link',
             },
             artifactFormat: {
-              //formater: 'dataFormater',
+              //formatter: 'dataFormatter',
               //query: 'rm:ProjectViewClass_ArtifactFormats_Query',
-              formater: 'link',
+              formatter: 'link',
             },
             description: {
-              //formater: 'tinyMCE',
+              //formatter: 'tinyMCE',
               sortable: true,
             },
             xhtmlText: {
-              formater: 'tinyMCE',
+              formatter: 'tinyMCE',
               tinyWidth: 'emptySpace', // emptySpace, content
               width: 300,
             },
             modified: {
               width: 140,
-              formater: 'dateTime',
+              formatter: 'dateTime',
               sortable: true,
             },
             modifiedBy: {
-              //formater: 'dataFormater',
+              //formatter: 'dataFormatter',
               //query: 'rm:ProjectViewClass_Users_Query',
               //key: 'name',
-              formater: 'link',
+              formatter: 'link',
             },
             '@id': {
               width: 220,
             },
             assetFolder: {
-              //formater: 'dataFormater',
+              //formatter: 'dataFormatter',
               //query: 'rm:ProjectViewClass_Folders_Query',
-              formater: 'link',
+              formatter: 'link',
             },
           }}
         />

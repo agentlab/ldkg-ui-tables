@@ -21,7 +21,6 @@ import { EditableCell } from './TableCell';
 
 interface JsonSchemaTableProps {
   schema: JsObject;
-  uischema?: any;
   onChangeData?: Function;
   onSwap?: Function;
   filteredValue?: string[];
@@ -41,6 +40,10 @@ const createTableData = (data: any) => {
 
 export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
   ({
+    viewKind,
+    viewKindElement,
+    viewDescr,
+    viewDescrElement,
     data = [],
     schema,
     limit,
@@ -78,6 +81,11 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
     };
     const JsonSchemaT = (
       <EditableTable
+        viewKind={viewKind}
+        viewKindElement={viewKindElement}
+        viewDescr={viewDescr}
+        viewDescrElement={viewDescrElement}
+        schema={schema}
         options={options}
         sortDir={sortDir}
         limit={limit}
@@ -86,7 +94,6 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
         columns={columns}
         setColumnVisible={setColumnVisible}
         dataSource={dataSource}
-        schema={schema}
         loadExpandedData={loadExpandedData}
         tableMenu={tableMenu}
         isMenu={uiSchemaOptions['columnMenu']}
@@ -166,14 +173,17 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
           sort: options[key].sortable,
           cellRenderer: ({ cellData, ...rest }: any) => (
             <EditableCell
+              viewKind={viewKind}
+              viewKindElement={createViewClass(key)}
+              viewDescr={viewDescr}
+              viewDescrElement={viewDescrElement}
+              schema={schema.properties[key]}
               editable={true}
               heightCache={heightCache}
               dataIndex={key}
               uri={uri}
               title={schema.properties[key]?.title || key}
               enabled={true}
-              viewElement={createViewClass(key)}
-              schema={schema.properties[key]}
               cellData={cellData}
               {...rest}
             />

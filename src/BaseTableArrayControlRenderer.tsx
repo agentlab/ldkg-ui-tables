@@ -16,5 +16,5 @@ export const BaseTableArrayControlRenderer = (props: any) => {
   return <JsonSchemaTable {...props} />;
 };
 
-export const tableArrayControlTester: RankedTester = rankWith(3, uiTypeIs('Array'));
+export const tableArrayControlTester: RankedTester = rankWith(3, uiTypeIs('aldkg:Array'));
 export const BaseTableArrayControlWithStore = withStoreToArrayProps(BaseTableArrayControlRenderer);

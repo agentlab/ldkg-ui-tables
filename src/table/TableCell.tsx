@@ -66,11 +66,14 @@ export const DragableRow = ({ index, moveRow, className, style, ...restProps }: 
 
 const renderTester = (prevProps: any, nextProps: any) => {
   return (
+    isEqual(prevProps.viewKind, nextProps.viewKind) &&
+    isEqual(prevProps.viewKindElement, nextProps.viewKindElement) &&
+    isEqual(prevProps.viewDescr, nextProps.viewDescr) &&
+    isEqual(prevProps.viewDescrElement, nextProps.viewDescrElement) &&
     isEqual(prevProps.rowData, nextProps.rowData) &&
     isEqual(prevProps.column, nextProps.column) &&
     isEqual(prevProps.cellData, nextProps.cellData) &&
     isEqual(prevProps.enabled, nextProps.enabled) &&
-    isEqual(prevProps.viewElement, nextProps.viewElement) &&
     isEqual(prevProps.rowData, nextProps.rowData) &&
     isEqual(prevProps.uri, nextProps.uri) &&
     isEqual(prevProps.heightCache, nextProps.heightCache) &&
@@ -80,10 +83,13 @@ const renderTester = (prevProps: any, nextProps: any) => {
 
 export const EditableCell: React.FC<any> = React.memo(
   ({
+    viewKind,
+    viewKindElement,
+    viewDescr,
+    viewDescrElement,
     cellData,
     schema,
     enabled,
-    viewElement,
     rowData,
     column,
     uri,
@@ -98,6 +104,12 @@ export const EditableCell: React.FC<any> = React.memo(
     };
     return cellData ? (
       <DispatchCell
+        id={''}
+        viewKind={viewKind}
+        viewKindElement={viewKindElement}
+        viewDescr={viewDescr}
+        viewDescrElement={viewDescrElement}
+        schema={schema}
         CKey={column.key}
         onMeasureChange={onChange}
         width={column.width}
@@ -105,11 +117,6 @@ export const EditableCell: React.FC<any> = React.memo(
         rowData={rowData}
         data={cellData}
         uri={uri}
-        id={''}
-        schema={schema}
-        uischema={{}}
-        viewElement={viewElement}
-        view={{ '@id': 'test', '@type': 'test', type: 'test' }}
         enabled={enabled}
       />
     ) : null;
