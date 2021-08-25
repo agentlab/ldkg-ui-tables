@@ -9,26 +9,7 @@
  ********************************************************************************/
 import moment from 'moment';
 import { rootModelInitialState } from '@agentlab/sparql-jsld-client';
-
-export const viewKindCollConstr = {
-  '@id': 'rm:ViewKinds_Coll',
-  entConstrs: [
-    {
-      '@id': 'rm:ViewKinds_EntConstr0',
-      schema: 'rm:ViewKindShape',
-    },
-  ],
-};
-
-export const viewDescrCollConstr = {
-  '@id': 'rm:Views_Coll',
-  entConstrs: [
-    {
-      '@id': 'rm:Views_EntConstr0',
-      schema: 'rm:ViewShape',
-    },
-  ],
-};
+import { viewDescrCollConstr, viewKindCollConstr } from '@agentlab/ldkg-ui-react';
 
 export const viewKinds = [
   {

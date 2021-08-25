@@ -40,59 +40,59 @@ const viewKinds = [
     collsConstrs: [
       {
         '@id': 'rm:Folders_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConstr',
         entConstrs: [
           {
             '@id': 'rm:Folders_Coll_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'raldkgm:EntConstr',
             schema: 'nav:folderShape',
           },
         ],
       },
       {
         '@id': 'rm:Users_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConstr',
         entConstrs: [
           {
             '@id': 'rm:Users_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'aldkg:EntConstr',
             schema: 'pporoles:UserShape',
           },
         ],
       },
       {
         '@id': 'rm:ArtifactClasses_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConstr',
         entConstrs: [
           {
             '@id': 'rm:ArtifactClasses_Coll_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'aldkg:EntConstr',
             schema: 'rm:ArtifactClassesShape',
           },
         ],
       },
       {
         '@id': 'rm:ArtifactFormats_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConstr',
         entConstrs: [
           {
             '@id': 'rm:ArtifactFormats_Coll_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'aldkg:EntConstr',
             schema: 'rmUserTypes:_YwcOsRmREemK5LEaKhoOowShape',
           },
         ],
       },
       {
         '@id': 'rm:CollectionView_Artifacts_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConstr',
         entConstrs: [
           {
             '@id': 'rm:CollectionView_Artifacts_Coll_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'aldkg:EntConstr',
             schema: 'rm:ArtifactShape',
             conditions: {
               '@id': 'rm:CollectionView_Artifacts_Coll_Shape0_Condition',
-              '@type': 'rm:QueryCondition',
+              '@type': 'aldkg:Condition',
               assetFolder: 'folders:samples_collection', //'folders:root',
             },
           },
@@ -228,26 +228,27 @@ const additionalColls: CollState[] = [
   },
 ];
 
-const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
-const rootStore = createUiModelFromState('reqs2', client, rootModelInitialState, additionalColls);
-const store: any = asReduxStore(rootStore);
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-connectReduxDevtools(require('remotedev'), rootStore);
-
 export default {
   title: 'Remote/Artifacts',
   component: Form,
 } as Meta;
 
-const Template: Story = (args: any) => (
-  <Provider store={store}>
-    <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
-      <div style={{ height: '1000px' }}>
-        <Form viewDescrId={viewDescrs[0]['@id']} viewDescrCollId={viewDescrCollConstr['@id']} />
-      </div>
-    </MstContextProvider>
-  </Provider>
-);
+const Template: Story = (args: any) => {
+  const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
+  const rootStore = createUiModelFromState('reqs2', client, rootModelInitialState, additionalColls);
+  const store: any = asReduxStore(rootStore);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  connectReduxDevtools(require('remotedev'), rootStore);
+  return (
+    <Provider store={store}>
+      <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
+        <div style={{ height: '1000px' }}>
+          <Form viewDescrId={viewDescrs[0]['@id']} viewDescrCollId={viewDescrCollConstr['@id']} />
+        </div>
+      </MstContextProvider>
+    </Provider>
+  );
+};
 
 export const RemoteData = Template.bind({});
 RemoteData.args = {};
