@@ -25,7 +25,6 @@ import {
   MstContextProvider,
   RendererRegistryEntry,
   viewKindCollConstr,
-  viewDescrCollConstr,
 } from '@agentlab/ldkg-ui-react';
 
 import 'antd/dist/antd.css';
@@ -38,6 +37,16 @@ const antdRenderers: RendererRegistryEntry[] = [
   ...antdDataControlRenderers,
   ...tableRenderers,
 ];
+
+export const viewDescrCollConstr = {
+  '@id': 'aldkg:Views_Coll',
+  entConstrs: [
+    {
+      '@id': 'aldkg:Views_EntConstr0',
+      schema: 'aldkg:ViewShape',
+    },
+  ],
+};
 
 const viewKinds = [
   {
@@ -66,6 +75,7 @@ const viewKinds = [
             '@type': 'aldkg:EntConstr',
             schema: 'hs:ProductCardShape',
             conditions: {
+              '@id': 'mktp:ProductCards_in_Category_Coll_Ent0_con',
               CardInCatLink: 'https://www.wildberries.ru/catalog/zdorove/ozdorovlenie?sort=popular&page=1&xsubject=594',
             },
           },
@@ -80,6 +90,7 @@ const viewKinds = [
             '@type': 'aldkg:EntConstr',
             schema: 'hs:ProductCardShape',
             conditions: {
+              '@id': 'mktp:ProductCards_in_Product_Coll_Ent0_Cond',
               CardInProdLink: 'mktp_d:Massager',
             },
           },
@@ -133,6 +144,7 @@ const viewKinds = [
                       title: 'WildBerries',
                       treeNodeTitleKey: 'name',
                       treeNodeParentKey: 'SubcatInCatLink',
+                      connections: [{ to: 'mktp:ProductCards_in_Category_Coll_Ent0_con', by: 'CardInCatLink' }],
                     },
                   },
                   {
@@ -164,6 +176,10 @@ const viewKinds = [
                 '@type': 'aldkg:Array',
                 resultsScope: 'mktp:ProductCards_in_Category_Coll',
                 options: {
+                  target: {
+                    name: 'правую таблицу',
+                    iri: 'mktp:ProductCards_in_Product_Coll',
+                  },
                   draggable: true,
                   resizeableHeader: true,
                   height: 'all-empty-space',
@@ -534,6 +550,7 @@ const viewKinds = [
                   title: 'Продукты',
                   treeNodeTitleKey: 'title',
                   treeNodeParentKey: 'SubProdInProdLink',
+                  connections: [{ to: 'mktp:ProductCards_in_Product_Coll_Ent0_Cond', by: 'CardInProdLink' }],
                 },
               },
             ],

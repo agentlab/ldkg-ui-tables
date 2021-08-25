@@ -10,7 +10,6 @@
 import moment from 'moment';
 import { rootModelInitialState } from '@agentlab/sparql-jsld-client';
 import { viewDescrCollConstr, viewKindCollConstr } from '@agentlab/ldkg-ui-react';
-
 export const viewKinds = [
   {
     '@id': 'rm:TimeSeriesViewKind',

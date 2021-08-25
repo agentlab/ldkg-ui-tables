@@ -19,6 +19,8 @@ import { tt } from '../ForDelete';
 interface BaseTablrMenu {
   record: JsObject;
   selection: any[];
+  target?: string;
+  addDataToTarget: (data: any) => void;
   visible: boolean;
   x: number | string;
   y: number | string;
@@ -53,6 +55,8 @@ export const BaseTableMenu: React.FC<BaseTablrMenu> = ({
   visible,
   x,
   y,
+  target,
+  addDataToTarget,
   onCreateArtifactBefore,
   onCreateArtifactAfter,
   onDeleteArtifacts,
@@ -92,6 +96,15 @@ export const BaseTableMenu: React.FC<BaseTablrMenu> = ({
             ? t('table.menu.linkArtifacts')
             : t('table.menu.linkArtifacts', { count: selection.length })}
         </li>
+        {selection.length != 0 && target ? (
+          <React.Fragment>
+            <Divider style={{ margin: '2px' }} />
+            <li onClick={() => addDataToTarget(selection)}>
+              <LinkOutlined style={{ color: '#08c' }} />
+              {`Добавить в ${target}`}
+            </li>
+          </React.Fragment>
+        ) : null}
       </ul>
     );
   } else {
