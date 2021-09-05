@@ -35,8 +35,6 @@ import {
   viewDescrCollConstr,
 } from '@agentlab/ldkg-ui-react';
 
-import 'antd/dist/antd.css';
-
 import { tableRenderers } from '../src';
 
 const viewKinds = [
