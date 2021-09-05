@@ -32,13 +32,6 @@ import 'antd/dist/antd.css';
 
 import { tableRenderers } from '../src';
 
-const antdRenderers: RendererRegistryEntry[] = [
-  ...antdControlRenderers,
-  ...antdLayoutRenderers,
-  ...antdDataControlRenderers,
-  ...tableRenderers,
-];
-
 const viewKinds = [
   {
     '@id': 'mktp:TwoTablesViewKind',
@@ -595,6 +588,13 @@ export default {
 } as Meta;
 
 const Template: Story = (args: any) => {
+  const antdRenderers: RendererRegistryEntry[] = [
+    ...antdControlRenderers,
+    ...antdLayoutRenderers,
+    ...antdDataControlRenderers,
+    ...tableRenderers,
+  ];
+
   const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
   const rootStore = createUiModelFromState('mktp', client, rootModelInitialState, additionalColls);
   const store: any = asReduxStore(rootStore);

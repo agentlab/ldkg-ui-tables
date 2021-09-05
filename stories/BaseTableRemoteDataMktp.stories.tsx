@@ -29,8 +29,6 @@ import {
 
 import { tableRenderers } from '../src';
 
-const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
-
 const viewKinds = [
   {
     '@id': 'rm:TableViewKind',
@@ -297,6 +295,8 @@ export default {
 } as Meta;
 
 const Template: Story = (args: any) => {
+  const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
+
   const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
   const rootStore = createUiModelFromState('mktp', client, rootModelInitialState, additionalColls);
   const store: any = asReduxStore(rootStore);

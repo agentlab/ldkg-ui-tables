@@ -12,7 +12,7 @@ import { Meta, Story } from '@storybook/react';
 
 import { Provider } from 'react-redux';
 import { asReduxStore, connectReduxDevtools } from 'mst-middlewares';
-import { SparqlClientImpl, Repository } from '@agentlab/sparql-jsld-client';
+import { SparqlClientImpl, MstRepository } from '@agentlab/sparql-jsld-client';
 import {
   antdCells,
   antdControlRenderers,
@@ -26,15 +26,6 @@ import { rootModelState } from '../src/store/data';
 import { JsonSchemaTable } from '../src/table/BaseTableControl';
 
 import { tableRenderers } from '../src';
-
-const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
-//@ts-ignore
-const rootStore = Repository.create(rootModelState, { client });
-const store: any = asReduxStore(rootStore);
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-connectReduxDevtools(require('remotedev'), rootStore);
-
-const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
 
 const fakeData = [
   {
@@ -272,85 +263,95 @@ export default {
   component: JsonSchemaTable,
 } as Meta;
 
-const Template: Story = (args: any) => (
-  <Provider store={store}>
-    <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
-      <div style={{ height: '1000px' }}>
-        <JsonSchemaTable
-          schema={artifactSchema}
-          path=''
-          data={fakeData}
-          options={{
-            draggable: true,
-            resizeableHeader: true,
-            order: [
-              'identifier',
-              'title',
-              '@type',
-              'artifactFormat',
-              'description',
-              'xhtmlText',
-              'modified',
-              'modifiedBy',
-              '@id',
-              'assetFolder',
-            ],
-            identifier: {
-              width: 140,
-              sortable: true,
-              formatter: 'link',
-              editable: false,
-              dataToFormatter: { link: '@id' },
-            },
-            title: {
-              formatter: 'artifactTitle',
-              dataToFormatter: { type: 'artifactFormat' },
-            },
-            '@type': {
-              width: 140,
-              //formatter: 'dataFormatter',
-              //query: 'rm:ProjectViewClass_ArtifactClasses_Query',
-              formatter: 'link',
-            },
-            artifactFormat: {
-              //formatter: 'dataFormatter',
-              //query: 'rm:ProjectViewClass_ArtifactFormats_Query',
-              formatter: 'link',
-            },
-            description: {
-              //formatter: 'tinyMCE',
-              sortable: true,
-            },
-            xhtmlText: {
-              formatter: 'tinyMCE',
-              tinyWidth: 'emptySpace', // emptySpace, content
-              width: 300,
-            },
-            modified: {
-              width: 140,
-              formatter: 'dateTime',
-              sortable: true,
-            },
-            modifiedBy: {
-              //formatter: 'dataFormatter',
-              //query: 'rm:ProjectViewClass_Users_Query',
-              //key: 'name',
-              formatter: 'link',
-            },
-            '@id': {
-              width: 220,
-            },
-            assetFolder: {
-              //formatter: 'dataFormatter',
-              //query: 'rm:ProjectViewClass_Folders_Query',
-              formatter: 'link',
-            },
-          }}
-        />
-      </div>
-    </MstContextProvider>
-  </Provider>
-);
+const Template: Story = (args: any) => {
+  const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
+
+  const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
+  //@ts-ignore
+  const rootStore = MstRepository.create(rootModelState, { client });
+  const store: any = asReduxStore(rootStore);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  connectReduxDevtools(require('remotedev'), rootStore);
+  return (
+    <Provider store={store}>
+      <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
+        <div style={{ height: '1000px' }}>
+          <JsonSchemaTable
+            schema={artifactSchema}
+            path=''
+            data={fakeData}
+            options={{
+              draggable: true,
+              resizeableHeader: true,
+              order: [
+                'identifier',
+                'title',
+                '@type',
+                'artifactFormat',
+                'description',
+                'xhtmlText',
+                'modified',
+                'modifiedBy',
+                '@id',
+                'assetFolder',
+              ],
+              identifier: {
+                width: 140,
+                sortable: true,
+                formatter: 'link',
+                editable: false,
+                dataToFormatter: { link: '@id' },
+              },
+              title: {
+                formatter: 'artifactTitle',
+                dataToFormatter: { type: 'artifactFormat' },
+              },
+              '@type': {
+                width: 140,
+                //formatter: 'dataFormatter',
+                //query: 'rm:ProjectViewClass_ArtifactClasses_Query',
+                formatter: 'link',
+              },
+              artifactFormat: {
+                //formatter: 'dataFormatter',
+                //query: 'rm:ProjectViewClass_ArtifactFormats_Query',
+                formatter: 'link',
+              },
+              description: {
+                //formatter: 'tinyMCE',
+                sortable: true,
+              },
+              xhtmlText: {
+                formatter: 'tinyMCE',
+                tinyWidth: 'emptySpace', // emptySpace, content
+                width: 300,
+              },
+              modified: {
+                width: 140,
+                formatter: 'dateTime',
+                sortable: true,
+              },
+              modifiedBy: {
+                //formatter: 'dataFormatter',
+                //query: 'rm:ProjectViewClass_Users_Query',
+                //key: 'name',
+                formatter: 'link',
+              },
+              '@id': {
+                width: 220,
+              },
+              assetFolder: {
+                //formatter: 'dataFormatter',
+                //query: 'rm:ProjectViewClass_Folders_Query',
+                formatter: 'link',
+              },
+            }}
+          />
+        </div>
+      </MstContextProvider>
+    </Provider>
+  );
+};
 
 export const LocalData = Template.bind({});
 LocalData.args = {};
