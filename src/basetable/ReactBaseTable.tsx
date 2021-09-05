@@ -101,11 +101,14 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
     isMenu,
     sortDir,
     schema,
+    onDeleteRows,
+    target,
     filteredValue,
     handleResize = () => {},
     resizeableHeader = false,
     rowKey = '@id',
     options = {},
+    addDataToTarget,
     onSelect,
     ...props
   }) => {
@@ -118,6 +121,7 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
     const sortColumns = createSortColumnsObject(sortDir);
     const [loadingMore, setLoadingMore] = useState(false);
     const [loadedAll, setLoadedAll] = useState(false);
+    const [selection, setSelection] = useState<any[]>([]);
     const i18n = { language: 'ru_RU' };
     const systemCol = {
       key: 'settings',
@@ -217,11 +221,18 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
           });
         }
         setPopupVisible(true);
-        console.log('setPopupRecord', rowData);
         setPopupRecord(rowData);
         setPopupCoords({ x: event.clientX, y: event.clientY });
       },
       onClick: ({ rowData, event }: any) => {
+        const idx = selection.indexOf(rowData);
+        let newSelection = [...selection];
+        if (idx != -1) {
+          newSelection = newSelection.splice(idx, 1);
+        } else {
+          newSelection.push(rowData);
+        }
+        setSelection(newSelection);
         onSelect(rowData);
       },
     };
@@ -375,11 +386,15 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
           x={popupCoords.x}
           y={popupCoords.y}
           record={popupRecord}
-          selection={[]}
+          selection={selection}
           visible={popupVisible}
           onCreateArtifactBefore={() => {}}
+          target={target}
+          addDataToTarget={addDataToTarget}
           onCreateArtifactAfter={() => {}}
-          onDeleteArtifacts={() => {}}
+          onDeleteArtifacts={() => {
+            onDeleteRows(selection);
+          }}
           onLinkArtifacts={() => {}}
         />
       </React.Fragment>

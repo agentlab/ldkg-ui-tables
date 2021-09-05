@@ -12,7 +12,8 @@ import { variable } from '@rdfjs/data-model';
 
 import { CollState } from '@agentlab/sparql-jsld-client';
 
-import { viewDescrCollConstr, viewKindCollConstr, viewKinds } from './data';
+import { viewKinds } from './data';
+import { viewDescrCollConstr, viewKindCollConstr } from '@agentlab/ldkg-ui-react';
 
 const viewDescrs = [
   {

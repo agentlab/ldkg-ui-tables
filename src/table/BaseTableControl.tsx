@@ -53,8 +53,10 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
     onSwap = () => {},
     onChangeData = () => {},
     onSelect,
+    onDeleteRows,
     onSort,
     loadExpandedData,
+    addDataToTarget,
     sortDir,
   }) => {
     const [parsedSchema, setParsedSchema] = useState<JsObject>({});
@@ -62,7 +64,6 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
     const [tableMenu] = useState<any>();
     const uiSchemaOptions = options;
     const heightCache = {};
-
     const [dataSource, setDataSource] = useState<JsObject[]>([]);
     const handleResize =
       (key: any) =>
@@ -88,6 +89,8 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
         schema={schema}
         options={options}
         sortDir={sortDir}
+        target={options?.target?.name}
+        addDataToTarget={addDataToTarget}
         limit={limit}
         loadMoreData={loadMoreData}
         bordered={uiSchemaOptions['resizeableHeader']}
@@ -99,6 +102,7 @@ export const JsonSchemaTable: React.FC<JsonSchemaTableProps> = React.memo(
         isMenu={uiSchemaOptions['columnMenu']}
         parsedSchema={parsedSchema}
         onSelect={onSelect}
+        onDeleteRows={onDeleteRows}
         onChangeMenu={setColumns}
         handleResize={handleResize}
         resizeableHeader={uiSchemaOptions['resizeableHeader']}

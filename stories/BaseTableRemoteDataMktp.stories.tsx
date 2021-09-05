@@ -29,8 +29,6 @@ import {
 
 import { tableRenderers } from '../src';
 
-const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
-
 const viewKinds = [
   {
     '@id': 'rm:TableViewKind',
@@ -40,11 +38,11 @@ const viewKinds = [
     collsConstrs: [
       {
         '@id': 'rm:ProductCard_Coll',
-        '@type': 'rm:CollConstr',
+        '@type': 'aldkg:CollConst',
         entConstrs: [
           {
             '@id': 'rm:ProductCard_Coll_Shape0',
-            '@type': 'rm:EntConstr',
+            '@type': 'aldkg:EntConstr',
             schema: 'hs:ProductCardShape',
             /*conditions: {
               '@id': 'rm:CollectionView_Artifacts_Coll_Shape0_Condition',
@@ -291,26 +289,29 @@ const additionalColls: CollState[] = [
   },
 ];
 
-const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
-const rootStore = createUiModelFromState('mktp', client, rootModelInitialState, additionalColls);
-const store: any = asReduxStore(rootStore);
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-connectReduxDevtools(require('remotedev'), rootStore);
-
 export default {
   title: 'Remote/Mktp',
   component: Form,
 } as Meta;
 
-const Template: Story = (args: any) => (
-  <Provider store={store}>
-    <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
-      <div style={{ height: '1080px' }}>
-        <Form viewDescrId={viewDescrs[0]['@id']} viewDescrCollId={viewDescrCollConstr['@id']} />
-      </div>
-    </MstContextProvider>
-  </Provider>
-);
+const Template: Story = (args: any) => {
+  const antdRenderers: RendererRegistryEntry[] = [...antdControlRenderers, ...antdLayoutRenderers, ...tableRenderers];
+
+  const client = new SparqlClientImpl('https://rdf4j.agentlab.ru/rdf4j-server');
+  const rootStore = createUiModelFromState('mktp', client, rootModelInitialState, additionalColls);
+  const store: any = asReduxStore(rootStore);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  connectReduxDevtools(require('remotedev'), rootStore);
+  return (
+    <Provider store={store}>
+      <MstContextProvider store={rootStore} renderers={antdRenderers} cells={antdCells}>
+        <div style={{ height: '1080px' }}>
+          <Form viewDescrId={viewDescrs[0]['@id']} viewDescrCollId={viewDescrCollConstr['@id']} />
+        </div>
+      </MstContextProvider>
+    </Provider>
+  );
+};
 
 export const RemoteData = Template.bind({});
 RemoteData.args = {};
