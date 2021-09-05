@@ -37,10 +37,10 @@ $table-prefix: BaseTable !default;
 }
 
 .#{$table-prefix} {
-  $table-font-size: 13px !default;
-  $table-padding-left: 15px !default;
-  $table-padding-right: 15px !default;
-  $column-padding: 7.5px !default;
+  $table-font-size: 12px !default;
+  $table-padding-left: 5px !default;
+  $table-padding-right: 10px !default;
+  $column-padding: 5px !default;
 
   $background-color: #ffffff !default;
   $box-shadow-color: #eeeeee !default;

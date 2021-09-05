@@ -126,7 +126,7 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
     const systemCol = {
       key: 'settings',
       dataKey: 'Settings',
-      width: 30,
+      width: 20,
       frozen: Column.FrozenDirection.LEFT,
       cellRenderer: ({ cellData }: any) => (
         <DraggableHandle>
@@ -164,7 +164,7 @@ export const EditableTable: React.FC<EditableTableProps<any>> = React.memo(
       key: '__selection__',
       dataKey: '__selection__',
       rowKey,
-      width: 50,
+      width: 30,
       flexShrink: 0,
       resizable: false,
       frozen: Column.FrozenDirection.LEFT,
